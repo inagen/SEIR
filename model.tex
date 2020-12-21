@@ -1,0 +1,108 @@
+\documentclass[5pt]{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\begin{document}
+
+\section{Модель SEIR}
+Модель SEIR является моделью развития эпидемии.
+
+Инфекция развивается по схеме «восприимчивые»(S) — «контактные»(E) — «инфицированные»(I) — «выздоровевшие»(R) и описывается системой уравнений:
+
+$
+\begin{cases}
+      \frac{dS}{dT} = \mu N  - \mu S - \beta \frac{I}{N} S\\
+      \frac{dE}{dT} = \beta \frac{I}{N} S - ( \mu + \alpha ) E\\
+      \frac{dI}{dT} = \alpha E - (\gamma + \mu) I \\
+      \frac{dR}{dT} = \gamma I - \mu R\\
+    \end{cases}\,.
+$\\
+$\mu$ - уровень смертности;\\
+$\alpha$ - величина, обратная среднему инкубационному периоду заболевания;\\
+$\beta$ - коэффициент интенсивности контактов индивидов с последующим инфицированием;\\
+$\gamma$ - коэффициент интенсивности выздоровления инфицированных индивидов;\\
+$N$ - численность популяции\\
+
+\section{Решение системы}
+
+\begin{equation}
+    \begin{cases}
+      \frac{dS}{dT} = \mu N  - \mu S - \beta \frac{I}{N} S\\
+      \frac{dE}{dT} = \beta \frac{I}{N} S - ( \mu + \alpha ) E\\
+      \frac{dI}{dT} = \alpha E - (\gamma + \mu) I \\
+      \frac{dR}{dT} = \gamma I - \mu R\\
+    \end{cases}\
+\end{equation}
+
+\begin{equation}
+    \begin{cases}
+      \frac{S(t_1) - S(t_0)}{t_1 - t_0} = \mu N(t_0)  - \mu S(t_0) - \beta \frac{I(t_0)}{N(t_0)} S(t_0)\\
+     \frac{E(t_1) - E(t_0)}{t_1 - t_0} = \beta \frac{I(t_0)}{N(t_0)} S(t_0) - ( \mu + \alpha ) E(t_0)\\
+     \frac{I(t_1) - I(t_0)}{t_1 - t_0}  = \alpha E(t_0) - (\gamma + \mu) I(t_0) \\
+      \frac{R(t_1) - R(t_0)}{t_1 - t_0}  = \gamma I(t_0) - \mu R(t_0)\\
+    \end{cases}\
+\end{equation}
+Первый шаг.
+Пусть $h = t_1 - t_0$
+
+\begin{equation}
+    \begin{cases}
+      S(t_1) = S(t_0) + h(\mu N(t_0) - \mu S(t_0) - \beta \frac{I(t_0)}{N(t_0)} S(t_0)\\
+      E(t_1) = E(t_0) + h(\beta \frac{I(t_0)}{N(t_0)} S(t_0) - (\mu + \alpha) E(t_0))\\
+      I(t_1) = I(t_0) + h(\alpha E(t_0) - (\gamma + \mu) I(t_0))\\
+      R(t_1) = R(t_0) + h(\gamma I(t0) - \mu R(t0))\\
+      N(t0) = S(t_0) + E(t_0) + I(t_0) + R(t_0)\\
+    \end{cases}\
+\end{equation}
+
+Второй шаг. 
+Выпишем вспомогательные функции:
+
+\begin{equation}
+    \begin{cases}
+      S_1(t_1) = S(t_1) + h(\mu N(t_1) - \mu S(t_1) - \beta \frac{I(t_1)}{N(t_1)} S(t_1)\\
+      E_1(t_1) = E(t_1) + h(\beta \frac{I(t_1)}{N(t_1)} S(t_1) - (\mu + \alpha) E(t_1))\\
+      I_1(t_1) = I(t_1) + h(\alpha E(t_1) - (\gamma + \mu) I(t_1))\\
+      R_1(t_1) = R(t_1) + h(\gamma I(t_1) - \mu R(t_1))\\
+      N_1(t_1) = S_1(t_1) + E_1(t_1) + I_1(t_1) + R_1(t_1)\\
+    \end{cases}\
+\end{equation}
+
+Решение при $t = t_2$
+
+\begin{equation}
+    \begin{cases}
+      S(t_2) = S(t_1) + \frac{h}{2}(\mu (N(t_1) + N_1(t_1)) - \mu (S(t_1) + S_1(t_1)) - \beta (\frac{I(t_1)}{N(t_1)} S(t_1) + \frac{I_1(t_1)}{N_1(t_1)} S_1(t_1))\\
+      E(t_2) = E(t_1) + \frac{h}{2}(\beta (\frac{I(t_1)}{N(t_1)} S(t_1) + \frac{I_1(t_1)}{N_1(t_1)} S_1(t_1)) - (\mu + \alpha) (E(t_1)) + E_1(t_1)))\\
+      I(t_2) = I(t_1) + \frac{h}{2}(\alpha (E(t_1) + E_1(t_1)) - (\gamma + \mu) (I(t_1) + I_1(t_1)))\\
+      R(t_2) = R(t_1) + \frac{h}{2}(\gamma (I(t_1) + I_1(t_1)) - \mu (R(t_1)) + R_1(t_1))\\
+      N(t_2) = S(t_2) + E(t_2) + I(t_2) + R(t_2)\\
+    \end{cases}\
+\end{equation}
+
+k-ый шаг. Выпишем вспомогательные функции
+Обозначим $h = t_k - t_{k-1}$
+
+\begin{equation}
+    \begin{cases}
+      S_1(t_{k-1}) = S(t_{k-1}) + h(\mu N(t_{k-1}) - \mu S(t_{k-1}) - \beta \frac{I(t_{k-1})}{Nt_{k-1})} S(t_{k-1})\\
+      E_1(t_{k-1}) = E(t_{k-1}) + h(\beta \frac{I(t_{k-1})}{N(t_{k-1})} S(t_{k-1}) - (\mu + \alpha) E(t_{k-1}))\\
+      I_1(t_{k-1}) = I(t_{k-1}) + h(\alpha E(t_{k-1}) - (\gamma + \mu) I(t_{k-1}))\\
+      R_1(t_{k-1}) = R(t_{k-1}) + h(\gamma I(t_{k-1}) - \mu R(t_{k-1}))\\
+      N_1(t_{k-1}) = S_1(t_{k-1}) + E_1(t_{k-1}) + I_1(t_{k-1}) + R_1(t_{k-1})\\
+    \end{cases}\
+\end{equation}
+
+Решение при $t = t_k$
+
+\begin{equation}
+    \begin{cases}
+      S(t_k) = S(t_{k-1}) + \frac{h}{2}(\mu (N(t_{k-1}) + N_1(t_{k-1}) -  (S(t_{k-1}) + S_1(t_{k-1})) - \beta (\frac{I(t_{k-1})}{N(t_{k-1})} S(t_{k-1}) + \frac{I_1(t_{k-1})}{N_1(t_{k-1})} S_1(t_{k-1}))\\
+      E(t_k) = E(t_{k-1}) + \frac{h}{2}(\beta (\frac{I(t_{k-1})}{N(t_{k-1})} S(t_{k-1}) + \frac{I_1(t_{k-1})}{N_1(t_{k-1})} S_1(t_{k-1})) - (\mu + \alpha) (E(t_{k-1})) + E_1(t_{k-1})))\\
+      I(t_k) = I(t_{k-1}) + \frac{h}{2}(\alpha (E(t_{k-1}) + E_1(t_{k-1})) - (\gamma + \mu) (I(t_{k-1}) + I_1(t_{k-1})))\\
+      R(t_k) = R(t_{k-1}) + \frac{h}{2}(\gamma (I(t_{k-1}) + I_1(t_{k-1})) - \mu (R(t_{k-1})) + R_1(t_{k-1}))\\
+      N(t_k) = S(t_k) + E(t_k) + I(t_k) + R(t_k)\\
+    \end{cases}\
+\end{equation}
+
+\end{document}
